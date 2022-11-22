@@ -1,20 +1,22 @@
 #define _CRT_SECURE_NO_WARNINGS
+#define _CRT_NONSTDC_NO_DEPRECATE
 #include <stdio.h>
 #include <math.h>
+#include<stdlib.h>
 #include <string.h>
 #include <Windows.h>
-#include <tchar.h>
-#define PATH L"..\x64\Debug\doch_proc.exe"
+
+#define PATH "..source\\repos\ProcC\\Debug\\doch_proc.exe"
 
 main() 
 {
 	system("chcp 1251 > nul");
 	printf("***Квадратное уравнение*** \n");
-	FILE* file; FILE* otv;
-	otv = fopen("Otvet.txt", "w+");
+	FILE* file;
 	char line[254];
-	float a, b, c;
-	a = 0; b = 0; c = 0;
+	float x1, x2;
+	float a, b, c, aost, bost , cost;
+	a = 0; b = 0; c = 0; aost = 0, bost = 0, cost = 0;
 	if ((file = fopen("Znach.txt", "r")))
 	{
 		fgets(line, 254, file);
@@ -169,17 +171,25 @@ main()
 			}
 		}
 		STARTUPINFO si;
-		PROCESS_INFORMATION pi;
+		PROCESS_INFORMATION pi = { 0 };
 		ZeroMemory(&si, sizeof(si));
 		si.cb = sizeof(si);
 		ZeroMemory(&pi, sizeof(pi));
-		char str[4];
-		str[0] = &PATH;
-		str[1] = a;
-		str[2] = b;
-		str[3] = c;
-		LPWSTR lp = &PATH;
-		if (!CreateProcess(str, lp, NULL, NULL, FALSE, 0, CREATE_NEW_CONSOLE, NULL, &si, &pi))
+		char* lp = malloc(150);
+		char sta[20];
+		char stb[20];
+		char stc[20];
+		char staOST[20];
+		char stbOST[20];
+		char stcOST[20];
+		itoa(a, sta, 10);
+		itoa(b, stb, 10);
+		itoa(c, stc, 10);
+		itoa(aost, staOST, 10);
+		itoa(bost, stbOST, 10);
+		itoa(cost, stcOST, 10);
+		snprintf(lp, 100, "%s %s.%s %s.%s %s.%s", PATH, sta, staOST, stb, stbOST, stc, stcOST);
+		if (!CreateProcess(NULL, lp, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi))
 		{
 			printf("CreateProcess failed (%d).\n", GetLastError());
 		}

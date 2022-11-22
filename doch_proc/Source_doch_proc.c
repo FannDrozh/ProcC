@@ -6,7 +6,9 @@
 main(int argc, char** argv)
 {
 	FILE* file = fopen("Otvet.txt", "w+");
-	double a, b, c;
+	float a = strtol(argv[1], NULL, 10);
+	float b = strtol(argv[2], NULL, 10);
+	float c = strtol(argv[3], NULL, 10);
 	float D, x1, x2;
 	D = (b * b) + 4 * a * c;
 	printf("Дискриминат: %f\n", D);
