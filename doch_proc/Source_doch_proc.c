@@ -3,12 +3,27 @@
 #include <math.h>
 #include <Windows.h>
 
+typedef struct Koefs {
+	float a;
+	float b;
+	float c;
+	FILE* file;
+} Koefs;
+
 main(int argc, char** argv)
 {
 	FILE* file = fopen("Otvet.txt", "w+");
-	float a = strtol(argv[1], NULL, 10);
-	float b = strtol(argv[2], NULL, 10);
-	float c = strtol(argv[3], NULL, 10);
+	char* buf = strtok(argv[0], ";");
+	char* A = buf;
+	buf = strtok(NULL, ";");
+	char* B = buf;
+	buf = strtok(NULL, ";");
+	char* C = buf;
+	buf = strtok(NULL, ";");
+	char* p = buf;
+	double a = atof(A);
+	double b = atof(B);
+	double c = atof(C);
 	float D, x1, x2;
 	D = (b * b) + 4 * a * c;
 	printf("Дискриминат: %f\n", D);
